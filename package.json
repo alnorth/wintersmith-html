@@ -1,0 +1,18 @@
+{
+  "name": "wintersmith-html",
+  "version": "0.1.0",
+  "description": "A Wintersmith plugin for including HTML files in the content tree",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alnorth29/wintersmith-html.git"
+  },
+  "keywords": [
+    "wintersmith"
+  ],
+  "author": "Alasdair North <alnorth@gmail.com>",
+  "license": "BSD",
+  "dependencies": {
+    "coffee-script": "~1.6.2"
+  }
+}
