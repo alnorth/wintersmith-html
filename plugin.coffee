@@ -1,26 +1,27 @@
 fs = require 'fs'
 path = require 'path'
 
-module.exports = (wintersmith, callback) ->
+module.exports = (env, callback) ->
 
-  class HtmlPlugin extends wintersmith.ContentPlugin
+  class HtmlPlugin extends env.ContentPlugin
 
-    constructor: (@_filename, @_text) ->
+    constructor: (@_filepath, @_text) ->
 
 
     getFilename: ->
-      @_filename
+      @_filepath.relative
 
-    render: (locals, contents, templates, callback) ->
-      # return the plain HTML file
-      callback null, new Buffer @_text
+    getView: ->
+      (env, locals, contents, templates, callback) ->
+        # return the plain HTML file
+        callback null, new Buffer @_text
 
-  HtmlPlugin.fromFile = (filename, base, callback) ->
-    fs.readFile path.join(base, filename), (error, buffer) ->
+  HtmlPlugin.fromFile = (filepath, callback) ->
+    fs.readFile filepath.full, (error, buffer) ->
       if error
         callback error
       else
-        callback null, new HtmlPlugin filename, buffer.toString()
+        callback null, new HtmlPlugin filepath, buffer.toString()
         
-  wintersmith.registerContentPlugin 'html', '**/*.html', HtmlPlugin
+  env.registerContentPlugin 'html', '**/*.html', HtmlPlugin
   callback() # tell the plugin manager we are done
